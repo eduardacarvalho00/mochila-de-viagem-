@@ -1,20 +1,34 @@
 const form = document.getElementById('novoItem');
-const lista = document.getElementById('lista');
-
-function addElement(nome, quantidade) {
+const list = document.getElementById('lista');
+const itens = [];
+function addElement(name, amount) {
   const newItem = document.createElement('li');
   newItem.classList.add('item');
 
   const numberItem = document.createElement('strong');
-  numberItem.innerHTML = quantidade;
+  numberItem.innerHTML = amount;
 
   newItem.appendChild(numberItem);
-  newItem.innerHTML += nome;
+  newItem.innerHTML += name;
 
-  lista.appendChild(newItem);
+  list.appendChild(newItem);
+
+  const itemCurrent = {
+    name,
+    amount,
+  };
+  itens.push(itemCurrent);
+  localStorage.setItem('item', JSON.stringify(itens));
 }
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
-  addElement(e.target.elements.nome.value, e.target.elements.quantidade.value);
+
+  const name = e.target.elements.nome;
+  const amount = e.target.elements.quantidade;
+
+  addElement(name.value, amount.value);
+
+  name.value = '';
+  amount.value = '';
 });
